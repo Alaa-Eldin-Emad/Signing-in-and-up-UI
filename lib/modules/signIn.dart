@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Login With Email',
+          title: const Text('Sign In',
               style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontFamily: 'Serif', color: Colors.white)),
@@ -45,22 +45,22 @@ class _LoginScreenState extends State<LoginScreen> {
               children: <Widget>[
                 const SizedBox(height: 40,),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(40, 200, 40, 20),
+                  padding: const EdgeInsets.fromLTRB(15, 150, 15, 10),
                   child: TextFormField(
                     controller: emailController,
                     focusNode: focusEmail,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(12)
+                          borderSide: const BorderSide(color: Colors.indigo),
+                          borderRadius: BorderRadius.circular(25)
                       ),
                       hintText: "Email",
                       hintStyle: const TextStyle(
                           fontFamily: 'Serif', color: Colors.indigo),
                       focusedBorder: OutlineInputBorder(borderSide:
                       const BorderSide(color: Colors.indigo),
-                          borderRadius: BorderRadius.circular(12)),
-                      fillColor: Colors.grey.shade100,
+                          borderRadius: BorderRadius.circular(10)),
+                      fillColor: Colors.white,
                       filled: true,
 
                     ),
@@ -68,19 +68,26 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(40, 0, 40, 20),
+                  padding: const EdgeInsets.fromLTRB(15, 25, 15, 10),
                   child: TextFormField(
                     controller: passController,
                     focusNode: focusPassword,
                     obscureText: !_passwordVisible,
                     decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(12)
-                      ),
                       hintText: "Password",
                       hintStyle: const TextStyle(
                           fontFamily: 'Serif', color: Colors.indigo),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.indigo),
+                          borderRadius: BorderRadius.circular(25)
+                      ),
+                      focusedBorder: OutlineInputBorder(borderSide:
+                      const BorderSide(color: Colors.indigo),
+                          borderRadius: BorderRadius.circular(10)),
+                      fillColor: Colors.white,
+                      filled: true,
+
+
                       suffixIcon: IconButton(
                         icon: Icon(
                           _passwordVisible
@@ -94,40 +101,25 @@ class _LoginScreenState extends State<LoginScreen> {
                           });
                         },
                       ),
-                      focusedBorder: OutlineInputBorder(borderSide:
-                      const BorderSide(color: Colors.indigo),
-                          borderRadius: BorderRadius.circular(12)),
-                      fillColor: Colors.grey.shade100,
-                      filled: true,
 
                     ),
                   ),
                 ),
-                const SizedBox(height: 15,),
-
-
-                const SizedBox(
-                  height: 10,
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 25, 15, 10),
+                  child: ElevatedButton(style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.indigo,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30)),),
+                        borderRadius: BorderRadius.circular(25)),),
+                      onPressed: ()
+                      {
 
-                  onPressed: () async
-                  {},
-
-                  child: const Padding(
-                    padding: EdgeInsets.only(
-                        left: 15, right: 15, top: 10, bottom: 10),
-                    child: Text('Login',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: 'Serif', color: Colors.white)),
-
-                  ),),
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.fromLTRB(130, 15, 130, 15),
+                        child: Text('Sign In',style: TextStyle(fontSize: 17),),
+                      )),
+                ),
                 Row(
                   children: [
                     const SizedBox(width: 30,),
