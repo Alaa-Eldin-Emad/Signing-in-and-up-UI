@@ -3,15 +3,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:signing_in_and_up/modules/signIn.dart';
 import 'package:http/http.dart' as http;
-Future<Album> createAlbum(String mail,String password) async {
+Future<Album> createAlbum(String email,String password) async {
   final response = await http.post(
     Uri.parse('http://10.0.2.2:8000/signup'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(<String, String>{
-      'Email': mail,
-      'Password': password,
+      'email': email,
+      'password': password,
     }),
   );
 
@@ -28,14 +28,16 @@ Future<Album> createAlbum(String mail,String password) async {
 
 class Album {
   final int id;
-  final String title;
+  final String email;
+  final String password;
 
-  const Album({required this.id, required this.title});
+  const Album({required this.id, required this.email,required this.password});
 
   factory Album.fromJson(Map<String, dynamic> json) {
     return Album(
       id: json['id'],
-      title: json['title'],
+      email: json['email'],
+      password: json['password'],
     );
   }
 }
@@ -275,7 +277,7 @@ class _HomeScreenState extends State<HomeScreen> {
       future: _futureAlbum,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return Text(snapshot.data!.title);
+          return Text(snapshot.data!.email+snapshot.data!.password);
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
         }
