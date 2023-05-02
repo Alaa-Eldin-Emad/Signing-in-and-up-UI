@@ -15,7 +15,7 @@ const userSchema=  new mongoose.Schema({
 
     },
     phoneNumber:{
-        type:,
+        type:String,
         required: [true , 'User must have a phone number']
     }
 
