@@ -1,6 +1,44 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:signing_in_and_up/modules/signIn.dart';
+import 'package:http/http.dart' as http;
+Future<Album> createAlbum(String mail,String password) async {
+  final response = await http.post(
+    Uri.parse('http://10.0.2.2:8000/signup'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'Email': mail,
+      'Password': password,
+    }),
+  );
 
+  if (response.statusCode == 201) {
+    // If the server did return a 201 CREATED response,
+    // then parse the JSON.
+    return Album.fromJson(jsonDecode(response.body));
+  } else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    throw Exception('Failed to create album.');
+  }
+}
+
+class Album {
+  final int id;
+  final String title;
+
+  const Album({required this.id, required this.title});
+
+  factory Album.fromJson(Map<String, dynamic> json) {
+    return Album(
+      id: json['id'],
+      title: json['title'],
+    );
+  }
+}
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -10,6 +48,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Future<Album>? _futureAlbum;
   RegExp emailRegExp = RegExp(
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
   var nameController = TextEditingController();
@@ -24,6 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final focusPhone = FocusNode();
   bool _confPasswordVisible = false;
   bool _passwordVisible = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -191,7 +231,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.circular(25)),),
                   onPressed: ()
                   {
-
+                    if (_futureAlbum == null)
+                    {_futureAlbum = createAlbum(emailController.text,passController.text);}
+                    else{ buildFutureBuilder();
+                    }
                   },
                   child: const Padding(
                     padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
@@ -225,6 +268,20 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
+    );
+  }
+  FutureBuilder<Album> buildFutureBuilder() {
+    return FutureBuilder<Album>(
+      future: _futureAlbum,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Text(snapshot.data!.title);
+        } else if (snapshot.hasError) {
+          return Text('${snapshot.error}');
+        }
+
+        return const CircularProgressIndicator();
+      },
     );
   }
 }
