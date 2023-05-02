@@ -3,14 +3,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:signing_in_and_up/modules/signIn.dart';
 import 'package:http/http.dart' as http;
-Future<Album> createAlbum(String email,String password) async {
+Future<Album> createAlbum(String name, String phoneNumber,String email,String password) async {
   final response = await http.post(
     Uri.parse('http://10.0.2.2:8000/signup'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(<String, String>{
+      'name': name,
       'email': email,
+      'phoneNumber': phoneNumber,
       'password': password,
     }),
   );
@@ -28,14 +30,18 @@ Future<Album> createAlbum(String email,String password) async {
 
 class Album {
   final int id;
+  final String name;
+  final String phoneNumber;
   final String email;
   final String password;
 
-  const Album({required this.id, required this.email,required this.password});
+  const Album({required this.id,required this.name,required this.phoneNumber, required this.email,required this.password});
 
   factory Album.fromJson(Map<String, dynamic> json) {
     return Album(
       id: json['id'],
+      name: json['name'],
+      phoneNumber: json['phoneNumber'],
       email: json['email'],
       password: json['password'],
     );
@@ -234,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressed: ()
                   {
                     if (_futureAlbum == null)
-                    {_futureAlbum = createAlbum(emailController.text,passController.text);}
+                    {_futureAlbum = createAlbum(nameController.text,emailController.text,phoneController.text,passController.text,);}
                     else{ buildFutureBuilder();
                     }
                   },
@@ -277,7 +283,7 @@ class _HomeScreenState extends State<HomeScreen> {
       future: _futureAlbum,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return Text(snapshot.data!.email+snapshot.data!.password);
+          return Text(snapshot.data!.name+snapshot.data!.email+snapshot.data!.phoneNumber+snapshot.data!.password);
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
         }
