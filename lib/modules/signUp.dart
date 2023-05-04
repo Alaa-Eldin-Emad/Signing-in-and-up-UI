@@ -196,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.circular(25)),),
                   onPressed: ()
                   {
-                    GetSignUpUserData();
+
                     if (_futureAlbum == null)
                     {_futureAlbum = createAlbum(nameController.text,emailController.text,phoneController.text,passController.text,);}
                     else{ buildFutureBuilder();

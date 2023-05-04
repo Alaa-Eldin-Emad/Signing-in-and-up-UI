@@ -2,8 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 Future<Album> createAlbum(String name, String phoneNumber,String email,String password) async {
-  final response = await http.post(
-    Uri.parse('http://10.0.2.2:8000/signup'),
+  final response = await http.post(Uri.parse('http://10.0.2.2:8000/signup'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -49,7 +48,7 @@ class GetSignUpUserData{
   Future fetchData() async{
     final response = await http.get(Uri.parse('http://10.0.2.2:8000/users'));
     if (response.statusCode==200) {
-      print(response);
+      print(json.decode(response.body));
       //Data.fromJson(json.decode(response.body));
     }
     else

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:signing_in_and_up/modules/signUp.dart';
 
+import '../network/signUpNetwork.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
   @override
@@ -123,6 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: TextStyle(fontSize: 16)),
                           TextButton(
                             onPressed: () async {
+                              GetSignUpUserData();
                               Navigator.pushReplacement(context,
                                   MaterialPageRoute(
                                       builder: (
