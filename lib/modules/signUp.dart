@@ -241,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
       future: _futureAlbum,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return Text(snapshot.data!.name+snapshot.data!.email+snapshot.data!.phoneNumber+snapshot.data!.password);
+          return Text(snapshot.data!.name+snapshot.data!.phoneNumber+snapshot.data!.email+snapshot.data!.password);
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
         }
