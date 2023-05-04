@@ -9,8 +9,8 @@ Future<Album> createAlbum(String name, String phoneNumber,String email,String pa
     },
     body: jsonEncode(<String, String>{
       'name': name,
-      'phoneNumber' : phoneNumber,
       'email': email,
+      'phoneNumber' : phoneNumber,
       'password': password,
     }),
   );

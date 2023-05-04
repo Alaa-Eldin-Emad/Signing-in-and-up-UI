@@ -1,5 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:signing_in_and_up/modules/signUp.dart';
+import 'package:http/http.dart' as http;
+
+
+import '../network/signUpNetwork.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -123,6 +129,17 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: TextStyle(fontSize: 16)),
                           TextButton(
                             onPressed: () async {
+
+                                print("here1");
+                                final response = await http.get(Uri.parse('http://10.0.2.2:8000/users'));
+                                print("here");
+                                if (response.statusCode==200) {
+                                  print(json.decode(response.body));
+                                  //Data.fromJson(json.decode(response.body));
+                                }
+                                else
+                                  throw Exception('Failed to load');
+
                               Navigator.pushReplacement(context,
                                   MaterialPageRoute(
                                       builder: (
