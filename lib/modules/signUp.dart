@@ -1,52 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:signing_in_and_up/modules/signIn.dart';
-import 'package:http/http.dart' as http;
-Future<Album> createAlbum(String name, String phoneNumber,String email,String password) async {
-  final response = await http.post(
-    Uri.parse('http://10.0.2.2:8000/signup'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, String>{
-      'name': name,
-      'email': email,
-      'phoneNumber': phoneNumber,
-      'password': password,
-    }),
-  );
+import '../network/signUpNetwork.dart';
 
-  if (response.statusCode == 201) {
-    // If the server did return a 201 CREATED response,
-    // then parse the JSON.
-    return Album.fromJson(jsonDecode(response.body));
-  } else {
-    // If the server did not return a 201 CREATED response,
-    // then throw an exception.
-    throw Exception('Failed to create album.');
-  }
-}
 
-class Album {
-  final int id;
-  final String name;
-  final String phoneNumber;
-  final String email;
-  final String password;
 
-  const Album({required this.id,required this.name,required this.phoneNumber, required this.email,required this.password});
-
-  factory Album.fromJson(Map<String, dynamic> json) {
-    return Album(
-      id: json['id'],
-      name: json['name'],
-      phoneNumber: json['phoneNumber'],
-      email: json['email'],
-      password: json['password'],
-    );
-  }
-}
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -239,6 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.circular(25)),),
                   onPressed: ()
                   {
+                    GetSignUpUserData();
                     if (_futureAlbum == null)
                     {_futureAlbum = createAlbum(nameController.text,emailController.text,phoneController.text,passController.text,);}
                     else{ buildFutureBuilder();
