@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:signing_in_and_up/modules/signIn.dart';
-import '../network/signUpNetwork.dart';
-
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Future<Album>? _futureAlbum;
-  RegExp emailRegExp = RegExp(
-      r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
   var nameController = TextEditingController();
   var emailController = TextEditingController();
   var passController = TextEditingController();
@@ -36,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
       onTap: (){focusEmail.unfocus();focusConfPassword.unfocus();focusName.unfocus();focusPassword.unfocus();focusPhone.unfocus();},
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Sign Up',
+          title: const Text('Sign up',
               style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontFamily: 'Serif', color: Colors.white)),
@@ -53,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 focusNode: focusName,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.indigo),
+                    borderSide: const BorderSide(color: Colors.indigo),
                     borderRadius: BorderRadius.circular(25),
 
                   ),
@@ -195,16 +188,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25)),),
                   onPressed: ()
-                  {
-
-                    if (_futureAlbum == null)
-                    {_futureAlbum = createAlbum(nameController.text,emailController.text,phoneController.text,passController.text,);}
-                    else{ buildFutureBuilder();
-                    }
-                  },
+                  {},
                   child: const Padding(
                     padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
-                    child: Text('Sign Up',style: TextStyle(fontSize: 17),),
+                    child: Text('Sign up',style: TextStyle(fontSize: 17),),
                   )),
             ),
             const SizedBox(height: 10,),
@@ -236,18 +223,5 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-  FutureBuilder<Album> buildFutureBuilder() {
-    return FutureBuilder<Album>(
-      future: _futureAlbum,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return Text(snapshot.data!.name+snapshot.data!.phoneNumber+snapshot.data!.email+snapshot.data!.password);
-        } else if (snapshot.hasError) {
-          return Text('${snapshot.error}');
-        }
 
-        return const CircularProgressIndicator();
-      },
-    );
-  }
 }
